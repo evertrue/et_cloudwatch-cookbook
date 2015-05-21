@@ -41,8 +41,7 @@ class Chef
               kind_of: Float,
               required: true
     attribute :unit,
-              kind_of: [NilClass, String],
-              default: nil
+              kind_of: String
     attribute :evaluation_periods,
               kind_of: Integer,
               default: 2
