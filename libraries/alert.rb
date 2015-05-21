@@ -18,15 +18,13 @@ class Chef
               kind_of: String,
               name_attribute: true
     attribute :access_key_id,
-              kind_of: String,
-              default: ''
+              kind_of: String
     attribute :secret_access_key,
-              kind_of: String,
-              default: ''
+              kind_of: String
     attribute :mock,
               kind_of: [TrueClass, FalseClass],
               default: false
-    attribute :description,
+    attribute :alarm_description,
               kind_of: String,
               default: 'Created with et_cloudwatch'
     attribute :alarm_actions,
@@ -82,7 +80,7 @@ class Chef
   end
 end
 
-class CHef
+class Chef
   class Provider::EtCloudWatchAlert < Provider::LWRPBase
     class AlertDoesNotExist < StandardError
       def initialize(alert, action)
@@ -96,12 +94,12 @@ EOH
     include EtCloudWatch::Helper
 
     def load_current_resource
-      @current_resource ||= Resource::CloudWatchAlert.new(new_resource.name)
+      @current_resource ||= Resource::EtCloudWatchAlert.new(new_resource.name)
       %w(name
          access_key_id
          secret_access_key
          mock
-         description
+         alarm_description
          alarm_actions
          ok_actions
          insufficient_data_actions
@@ -215,13 +213,13 @@ EOH
         return false unless current_alert.insufficient_data_actions == find_actions(new_resource.insufficient_data_actions)
       end
 
-      %(description
-        comparison_operator
-        evaluation_periods
-        metric_name
-        period
-        statistic
-        threshold).each do |r|
+      %w(alarm_description
+         comparison_operator
+         evaluation_periods
+         metric_name
+         period
+         statistic
+         threshold).each do |r|
         return false unless current_alert.send(r) == new_resource.send(r)
       end
     end

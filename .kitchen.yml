@@ -10,12 +10,16 @@ driver:
   security_group_ids: ['ci-testing']
   flavor_id: c3.xlarge
   username: ubuntu
+  iam_profile_name: test-et-cloudwatch
 
 provisioner:
   name: chef_zero
 
 platforms:
   - name: ubuntu-14.04
+    driver:
+      username: ubuntu
+      image_id: ami-10849178
 
 suites:
   - name: default
