@@ -1,9 +1,9 @@
 name             'et_cloudwatch'
 maintainer       'EverTrue, Inc'
 maintainer_email 'devops@evertrue.com'
-license          'all_rights'
-description      'Installs/Configures et_cloudwatch'
-long_description 'Installs/Configures et_cloudwatch'
+license          'Apache 2.0'
+description      'Provides a resource for setting up CloudWatch alerts'
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '1.0.1'
 
 
