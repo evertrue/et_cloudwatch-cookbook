@@ -18,20 +18,15 @@ class Chef
               kind_of: String,
               name_attribute: true
     attribute :alarm_actions,
-              kind_of: Array,
-              required: true
+              kind_of: Array
     attribute :statistic,
-              kind_of: String,
-              required: true
+              kind_of: String
     attribute :threshold,
-              kind_of: Float,
-              required: true
+              kind_of: Float
     attribute :comparison_operator,
-              kind_of: String,
-              required: true
+              kind_of: String
     attribute :metric_name,
-              kind_of: String,
-              required: true
+              kind_of: String
 
     # Optional Attributes
     attribute :access_key_id,
@@ -85,6 +80,7 @@ class Chef
   class Provider::EtCloudWatchAlert < Provider::LWRPBase
     class AlertDoesNotExist < StandardError
       def initialize(alert, action)
+        @action = action
         super <<-EOH
 The CloudWatch alert `#{alert}' does not exist. In order to #{action} `#{job}', that
 job must first be created!
@@ -215,7 +211,14 @@ EOH
     def validate_config!
       Chef::Log.debug "Validate #{new_resource} configuration"
 
-      true
+      return true unless @action == :create
+      %w(alarm_actions
+         statistic
+         threshold
+         comparison_operator
+         metric_name).each do |r|
+        fail "et_cloudwatch missing required parameter #{r} for action #{@action}" if new_resource.send(r).nil?
+      end
     end
   end
 end
