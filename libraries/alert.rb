@@ -13,10 +13,27 @@ class Chef
     actions :create, :delete, :disable, :enable
     default_action :create
 
-    # Attributes
+    # Required Attributes
     attribute :name,
               kind_of: String,
               name_attribute: true
+    attribute :alarm_actions,
+              kind_of: Array,
+              required: true
+    attribute :statistic,
+              kind_of: String,
+              required: true
+    attribute :threshold,
+              kind_of: Float,
+              required: true
+    attribute :comparison_operator,
+              kind_of: String,
+              required: true
+    attribute :metric_name,
+              kind_of: String,
+              required: true
+
+    # Optional Attributes
     attribute :access_key_id,
               kind_of: String
     attribute :secret_access_key,
@@ -27,19 +44,10 @@ class Chef
     attribute :alarm_description,
               kind_of: String,
               default: 'Created with et_cloudwatch'
-    attribute :alarm_actions,
-              kind_of: Array,
-              required: true
     attribute :ok_actions,
               kind_of: Array
     attribute :insufficient_data_actions,
               kind_of: Array
-    attribute :statistic,
-              kind_of: String,
-              required: true
-    attribute :threshold,
-              kind_of: Float,
-              required: true
     attribute :unit,
               kind_of: String
     attribute :evaluation_periods,
@@ -48,12 +56,6 @@ class Chef
     attribute :period,
               kind_of: Integer,
               default: 300
-    attribute :comparison_operator,
-              kind_of: String,
-              required: true
-    attribute :metric_name,
-              kind_of: String,
-              required: true
 
     attr_writer :enabled, :exists
 
