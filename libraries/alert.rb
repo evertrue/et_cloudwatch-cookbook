@@ -125,7 +125,7 @@ EOH
         end
       end
 
-      if correct_config?
+      if config_up_to_date?
         Chef::Log.debug("#{new_resource} config up to date - skipping")
       else
         converge_by("Update #{new_resource} config") do
@@ -190,7 +190,7 @@ EOH
       end
     end
 
-    def correct_config?
+    def config_up_to_date?
       return false unless current_alert.unit == new_resource.unit if new_resource.unit
       return false unless current_alert.alarm_actions == find_actions(new_resource.alarm_actions)
       return false unless current_alert.ok_actions == find_actions(new_resource.ok_actions) if new_resource.ok_actions
