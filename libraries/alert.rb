@@ -96,23 +96,7 @@ EOH
 
     def load_current_resource
       @current_resource ||= Resource::EtCloudWatchAlert.new(new_resource.name)
-      %w(name
-         access_key_id
-         secret_access_key
-         mock
-         alarm_description
-         alarm_actions
-         ok_actions
-         insufficient_data_actions
-         statistic
-         threshold
-         unit
-         evaluation_periods
-         period
-         comparison_operator
-         metric_name).each do |r|
-        @current_resource.send(r, new_resource.send(r))
-      end
+      @current_resource.send('name', new_resource.send('name'))
 
       if current_alert
         @current_resource.exists  = true
