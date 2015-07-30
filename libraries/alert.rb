@@ -236,27 +236,3 @@ end
 
 Chef::Platform.set(resource: :et_cloudwatch_alert,
                    provider: Chef::Provider::EtCloudWatchAlert)
-
-#  "AlarmName"=>"prod-api-contacts-1b High CPU Utilization > 5min",
-#  "ComparisonOperator"=>"GreaterThanOrEqualToThreshold",
-#  "MetricName"=>"CPUUtilization",
-#  "Period"=>300,
-#  "Statistic"=>"Average",
-#  "Threshold"=>85.0,
-
-# [12] pry(main)* }
-# => {"AlarmActions"=>["arn:aws:sns:us-east-1:037590317780:critical_alerts"],
-#  "AlarmDescription"=>"Created by eherot by hand through the API",
-#  "AlarmName"=>"prod-api-contacts-1b High CPU Utilization > 5min",
-#  "ComparisonOperator"=>"GreaterThanOrEqualToThreshold",
-#  "Dimensions"=>[{"Name"=>"InstanceId", "Value"=>"i-ced5fa20"}],
-#  "EvaluationPeriods"=>2,
-#  "InsufficientDataActions"=>[],
-#  "MetricName"=>"CPUUtilization",
-#  "Namespace"=>"AWS/EC2",
-#  "OKActions"=>"arn:aws:sns:us-east-1:037590317780:critical_alerts",
-#  "Period"=>300,
-#  "Statistic"=>"Average",
-#  "Threshold"=>85.0,
-#  "Unit"=>nil}
-# [13] pry(main)> cw.put_metric_alarm alarm_options
