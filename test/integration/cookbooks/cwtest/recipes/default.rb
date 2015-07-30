@@ -5,3 +5,8 @@ et_cloudwatch_alert 'test alarm' do
   comparison_operator 'GreaterThanOrEqualToThreshold'
   metric_name 'CPUUtilization'
 end
+
+ruby_block 'disable cloudwatch alert' do
+  block {}
+  notifies :disable, 'et_cloudwatch_alert[test alarm]'
+end
