@@ -142,7 +142,7 @@ EOH
 
     action(:disable) do
       unless current_resource.exists?
-        fail AlarmDoesNotExist.new(new_resource.name, :disable)
+        fail AlertDoesNotExist.new(new_resource.name, :disable)
       end
 
       if current_resource.enabled?
@@ -156,7 +156,7 @@ EOH
 
     action(:enable) do
       unless current_resource.exists?
-        fail AlarmDoesNotExist.new(new_resource.name, :enable)
+        fail AlertDoesNotExist.new(new_resource.name, :enable)
       end
 
       if current_resource.enabled?
