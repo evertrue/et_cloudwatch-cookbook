@@ -78,16 +78,6 @@ end
 
 class Chef
   class Provider::EtCloudWatchAlert < Provider::LWRPBase
-    class AlertDoesNotExist < StandardError
-      def initialize(alert, action)
-        @action = action
-        super <<-EOH
-The CloudWatch alert `#{alert}' does not exist. In order to #{action} `#{job}', that
-job must first be created!
-EOH
-      end
-    end
-
     include EtCloudWatch::Helper
 
     def load_current_resource
@@ -141,9 +131,7 @@ EOH
     end
 
     action(:disable) do
-      unless current_resource.exists?
-        fail AlertDoesNotExist.new(new_resource.name, :disable)
-      end
+      fail Chef::Exceptions::ResourceNotFound unless current_resource.exists?
 
       if current_resource.enabled?
         converge_by("Disable #{new_resource}") do
@@ -155,9 +143,7 @@ EOH
     end
 
     action(:enable) do
-      unless current_resource.exists?
-        fail AlertDoesNotExist.new(new_resource.name, :enable)
-      end
+      fail Chef::Exceptions::ResourceNotFound unless current_resource.exists?
 
       if current_resource.enabled?
         Chef::Log.debug("#{new_resource} enabled - skipping")
