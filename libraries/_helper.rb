@@ -30,7 +30,9 @@ module EtCloudWatch
 
     def find_actions(actions)
       actions.map do |a|
-        if a =~ /^arn:/
+        if a =~ /^arn:aws:swf:/
+          a
+        elsif a =~ /^arn:/
           r = sns_topics.find { |t| t.id == a }
           r || fail("SNS Topic #{a} does not exist")
         else
